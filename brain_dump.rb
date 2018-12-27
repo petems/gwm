@@ -1,3 +1,5 @@
+require 'octokit'
+
 github = Octokit::Client.new(access_token: token)
 
 github.auto_paginate = true
