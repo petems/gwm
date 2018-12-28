@@ -25,7 +25,7 @@ module Gwm
       def verify_credentials(github_client, say_success = false)
         begin
           response = github_client.user
-          if response.error?
+          if response.respond_to?(:error?)
             say 'Authentication with Github failed: Error Response'
             say "Error response was: #{response.error}"
             exit 1
