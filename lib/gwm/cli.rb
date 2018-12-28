@@ -64,6 +64,10 @@ module Gwm
                   type: :boolean,
                   aliases: '-i',
                   desc: 'Do not follow forked repos'
+    method_option 'dry_run',
+                  type: :boolean,
+                  aliases: '-d',
+                  desc: 'Only show changes, dont perform them'
     def user_follow(user)
       Middleware.sequence_follow_user.call(
                                       'gwm_action' => __method__,

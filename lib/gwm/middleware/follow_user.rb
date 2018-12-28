@@ -22,15 +22,23 @@ module Gwm
           say "Repos after forks removed: #{users_repos_to_watch.count}"
         end
 
+        if env['dry_run']
+          say "Dry run enabled: only listing repos that would be followed"
+        end
+
         users_repos_to_watch.each do |repo|
-          result = github.update_subscription("#{user_to_follow}/#{repo.name}", subscribed: true)
-
-          if result[:subscribed]
-            puts "Subscribed to #{user_to_follow}/#{repo.name} successfully"
+          if env['dry_run']
+            say "#{user_to_follow}/#{repo.name} would be followed"
           else
-            puts 'Failed for some reason! :('
-          end
+            result = github.update_subscription("#{user_to_follow}/#{repo.name}", subscribed: true)
 
+            if result[:subscribed]
+              say "Subscribed to #{user_to_follow}/#{repo.name} successfully"
+            else
+              say 'Failed for some reason! :('
+            end
+
+          end
         end
 
         @app.call(env)
