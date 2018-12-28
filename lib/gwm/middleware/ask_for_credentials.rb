@@ -67,7 +67,7 @@ module Gwm
             token_response = client.create_authorization(
               scopes: SCOPES,
               note: NOTE,
-              headers: { 'X-GitHub-OTP' => two_factor_token }
+              headers: otp_header(two_factor_token)
             )
           rescue Octokit::UnprocessableEntity => e
             replace_existing_token(client, e, two_factor_token)
